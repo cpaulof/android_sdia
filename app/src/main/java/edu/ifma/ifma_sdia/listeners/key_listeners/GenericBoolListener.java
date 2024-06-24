@@ -16,11 +16,11 @@ public class GenericBoolListener implements KeyListener {
     }
     @Override
     public void onValueChange(@Nullable Object o, @Nullable Object o1) {
-        float v;
+        boolean v;
         if(o==null && o1==null) return;
-        if(o1!=null) v = (float) o1;
-        else v = (float) o;
-        byte[] data = Builders.genericFloatData(this.code.value, v);
+        if(o1!=null) v = (boolean) o1;
+        else v = (boolean) o;
+        byte[] data = Builders.genericBoolData(this.code.value, v);
         this.client.addSenderData(data);
     }
 }

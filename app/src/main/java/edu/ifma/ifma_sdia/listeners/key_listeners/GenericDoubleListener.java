@@ -16,11 +16,11 @@ public class GenericDoubleListener implements KeyListener {
     }
     @Override
     public void onValueChange(@Nullable Object o, @Nullable Object o1) {
-        float v;
+        double v;
         if(o==null && o1==null) return;
-        if(o1!=null) v = (float) o1;
-        else v = (float) o;
-        byte[] data = Builders.genericFloatData(this.code.value, v);
+        if(o1!=null) v = (double) o1;
+        else v = (double) o;
+        byte[] data = Builders.genericDoubleData(this.code.value, v);
         this.client.addSenderData(data);
     }
 }

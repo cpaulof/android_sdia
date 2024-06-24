@@ -137,9 +137,9 @@ public class BaseClient {
         int r = receiver.read(bSize, 0, 4);
         if(r!=4) throw new IOException();
         int size = parse32Int(bSize);
-        Log.i("BaseClient", "(recv) size:"+size);
+        // Log.i("BaseClient", "(recv) size:"+size);
         if(size > 0xFFFFF) {
-            Log.e("BaseClient", "(recv) data size is too big!");
+            // Log.e("BaseClient", "(recv) data size is too big!");
             throw new IOException();
         }
         byte[] data = new byte[size];
