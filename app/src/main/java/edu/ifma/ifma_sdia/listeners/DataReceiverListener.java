@@ -26,6 +26,7 @@ public class DataReceiverListener {
             }
         }).start();
     }
+
     public void stop(){
         running = false;
     }

@@ -1,8 +1,13 @@
 package edu.ifma.ifma_sdia.handlers;
 
+import androidx.annotation.Nullable;
+
 import java.nio.ByteBuffer;
 
+import dji.common.error.DJIError;
 import dji.common.flightcontroller.LocationCoordinate3D;
+import dji.sdk.mission.timeline.TimelineElement;
+import dji.sdk.mission.timeline.TimelineEvent;
 
 public class Builders {
     public static byte[] heartBeat(byte[] check){
@@ -10,6 +15,21 @@ public class Builders {
         Code code = BuildCodes.HEART_BEAT;
         data.put(code.value);
         data.put(check);
+        return data.array();
+    }
+    public static byte[] missionEvent(byte current_state){
+        ByteBuffer data = ByteBuffer.allocate(2);
+        Code code = BuildCodes.WAYPOINT_MISSION_STATUS;
+        data.put(code.value);
+        data.put(current_state);
+        return data.array();
+    }
+    public static byte[] missionEvent(byte current_state, int execution_state){
+        ByteBuffer data = ByteBuffer.allocate(6);
+        Code code = BuildCodes.WAYPOINT_MISSION_EXECUTION_STATUS;
+        data.put(code.value);
+        data.put(current_state);
+        data.putInt(execution_state);
         return data.array();
     }
 
@@ -28,6 +48,7 @@ public class Builders {
         data.putDouble(value);
         return data.array();
     }
+
     public static byte[] genericFloatData(byte code, float value){
         ByteBuffer data = ByteBuffer.allocate(5);
         data.put(code);
@@ -47,4 +68,22 @@ public class Builders {
         return data.array();
     }
 
+    public enum CurrentMissionState{
+        DOWNLOAD_ERROR(0),
+        NOT_SUPPORTED(1),
+        READY_TO_UPLOAD(2),
+        UPLOADING(3),
+        READY_TO_EXECUTE(4),
+        EXECUTING(5),
+        EXECUTION_PAUSED(6),
+        DISCONNECTED(7),
+        RECOVERING(8),
+        UNKNOWN(9);
+
+        final int value;
+        CurrentMissionState(int v){
+            value = v;
+        }
+        public int getValue(){return value;}
+    }
 }
